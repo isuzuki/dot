@@ -24,9 +24,6 @@ set whichwrap=b,s,h,l,<,>,[,]
 set number
 set ruler
 
-"copy paste
-set paste
-
 "status line
 set laststatus=2
 set statusline=%F%m%r%h%w\ [ENCORDING=%{&enc}]\ [FORMAT=%{&fileformat}]
@@ -36,11 +33,6 @@ set statusline=%F%m%r%h%w\ [ENCORDING=%{&enc}]\ [FORMAT=%{&fileformat}]
 "syntax check
 autocmd filetype php :set makeprg=php\ -l\ %
 autocmd filetype php :set errorformat=%m\ in\ %f\ on\ line\ %l
-
-"dictionary
-autocmd BufRead *.php\|*.tpl :set
-set dictionary=~/.vim/dict/php.dict
-
 
 "=== for NeoBundle
 filetype off
@@ -59,6 +51,8 @@ NeoBundle 'Shougo/vimfiler'
 NeoBundle 'vim-scripts/sudo.vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'rking/ag.vim'
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'tpope/vim-surround'
 
 nmap <F1> :NeoBundleInstall<CR>
 
@@ -67,8 +61,7 @@ filetype indent on
 
 "=== for vim plugin
 "neocomplcache
-autocmd BufRead *.php\|*.ctp\|*.tpl
-set dictionary=~/.vim/dict/php.dict filetype=php
+autocmd BufRead *.php\|*.ctp\|*.tpl :set dictionary=~/.vim/dict/php.dict filetype=php
 
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_camel_case_completion = 1
@@ -80,17 +73,21 @@ let g:neocomplcache_caching_percent_in_statusline = 1
 let g:neocomplcache_enable_skip_completion = 1
 let g:neocomplcache_skip_input_time = '0.5'
 
+"vim-ref
+let g:ref_phpmanual_path = $HOME . '/.vim/phpmanual'
+nmap ,rp :<C-u>Ref phpmanual<Space>
+
 "tagbar
 "hide variables
 let g:tagbar_type_php = {
-\ 'ctagstype' : 'php',
-\ 'kinds' : [
-\ 'i:interfaces:0:1',
-\ 'c:classes:0:1',
-\ 'd:constant definitions:0:0',
-\ 'f:functions:0:1',
-\ 'j:javascript functions:0:1'
-\ ]
+	\ 'ctagstype' : 'php',
+	\ 'kinds' : [
+		\ 'i:interfaces:0:1',
+		\ 'c:classes:0:1',
+		\ 'd:constant definitions:0:0',
+		\ 'f:functions:0:1',
+		\ 'j:javascript functions:0:1'
+	\ ]
 \ }
 
 nmap <F8> :TagbarToggle<CR>
