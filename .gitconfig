@@ -1,0 +1,24 @@
+[user]
+	name  = isuzuki
+	email = 
+
+[core]
+	autocrlf = true
+	editor   = "vim"
+
+[color]
+	ui          = true
+	status      = auto
+	diff        = auto
+	branch      = auto
+	interactive = auto
+	grep        = auto
+
+[alias]
+	# http://blog.blindgaenger.net/advanced_git_aliases.html
+	alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
+	br = branch
+	ci = commit
+	co = checkout
+	di = diff
+	st = status
