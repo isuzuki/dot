@@ -28,6 +28,14 @@ set ruler
 set laststatus=2
 set statusline=%F%m%r%h%w\ [ENCORDING=%{&enc}]\ [FORMAT=%{&fileformat}]
 
+set visualbell
+
+"tab
+nnoremap <C-h> gt
+nnoremap <C-l> gT
+for i in range(1, 9)
+	execute 'nnoremap <Tab>' . i . ' ' . i . 'gt'
+endfor
 
 "=== for PHP setting 
 "syntax check
