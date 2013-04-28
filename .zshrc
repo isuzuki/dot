@@ -1,10 +1,13 @@
 export LANG=ja_JP.UTF-8
 export EDITOR=vim
 
+export PATH=/usr/local/opt/play-2.1.0:$PATH
+
 HISTFILE=$HOME/.zsh-history
 HISTSIZE=100000
 SAVEHIST=100000
 
+# set key bind emacs
 bindkey -e
 
 autoload -Uz zmv
@@ -13,6 +16,8 @@ autoload -Uz zmv
 alias zmv='noglob zmv -W'
 alias ctags='/usr/local/Cellar/ctags/5.8/bin/ctags'
 alias rm='rm -i'
+alias ls='ls -GF'
+alias diff='colordiff'
 
 ## 補完機能の強化
 autoload -U compinit
@@ -24,11 +29,14 @@ autoload -Uz vcs_info
 autoload colors
 colors
 
-setopt prompt_subst  # 色を使う
-setopt auto_list     # 補完候補を一覧表示
-setopt auto_menu     # TAB で順に補完候補を切り替える
-setopt correct       # スペルチェック
-setopt share_history # ヒストリを共有
+setopt prompt_subst      # 色を使う
+setopt auto_cd           # ディレクトリ移動時cdコマンドを必要としない
+setopt auto_list         # 補完候補を一覧表示
+setopt auto_menu         # TAB で順に補完候補を切り替える
+setopt auto_pushd        # cd時に自動でpushd
+setopt pushd_ignore_dups # 同じディレクトリをpushdしない
+setopt correct           # コマンドスペルチェック
+setopt share_history     # ヒストリを共有
 
 # from http://d.hatena.ne.jp/mollifier/20100906/p1
 zstyle ':vcs_info:*' enable git svn hg bzr
@@ -78,3 +86,4 @@ case $OSTYPE in
 	linux*)
 		;;
 esac
+
