@@ -137,6 +137,9 @@ function! g:my_vimfiler_settings()
 	nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
 endfunction
 
+"Edit file by tabedit.
+let g:vimfiler_edit_action = 'tabopen'
+
 let s:my_action = { 'is_selectable' : 1 }
 function! s:my_action.func(candidates)
 	wincmd p
