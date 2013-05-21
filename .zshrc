@@ -4,7 +4,7 @@ export EDITOR=vim
 export PATH=/usr/local/opt/play-2.1.0:$PATH
 
 # 各環境ごとの設定を記述
-if [ -f "$HOME/.zshrc.local"]; then
+if [  -f "$HOME/.zshrc.local" ]; then
 	source "$HOME/.zshrc.local"
 fi
 
