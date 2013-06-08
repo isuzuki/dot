@@ -6,6 +6,9 @@ colorscheme darkblue
 set encoding=utf-8
 set fileencoding=utf-8
 
+set list
+set listchars=tab:▸\ ,eol:¬
+
 "indent
 set autoindent
 set cindent
@@ -63,6 +66,7 @@ NeoBundle 'thinca/vim-ref'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
+NeoBundle 'tomasr/molokai'
 
 nmap <F1> :NeoBundleInstall<CR>
 
@@ -101,7 +105,7 @@ let g:tagbar_type_php = {
 \ }
 
 nmap <F8> :TagbarToggle<CR>
-
+autocmd VimEnter * TagbarToggle
 
 "unite.vim
 " 入力モードで開始する
@@ -129,6 +133,7 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 
+call unite#custom_default_action('file', 'tabopen')
 
 "vimfiler
 nnoremap <F2> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<Cr>
@@ -149,7 +154,7 @@ function! s:my_action.func(candidates)
 endfunction
 call unite#custom_action('file', 'my_split', s:my_action)
 
-let s:my_action = { 'is_selectable' : 1 }                     
+let s:my_action = { 'is_selectable' : 1 }
 function! s:my_action.func(candidates)
 	wincmd p
 	exec 'vsplit '. a:candidates[0].action__path
@@ -178,3 +183,31 @@ function! s:my_gitv_settings()
 	nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
 	nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 endfunction
+
+
+" 全角スペースをハイライトさせる
+function! TwoByteCharSpace()
+	highlight TwoByteCharSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
+endfunction
+
+if has('syntax')
+	augroup TwoByteCharSpace
+		autocmd!
+		autocmd ColorScheme       * call TwoByteCharSpace()
+		autocmd VimEnter,WinEnter * match TwoByteCharSpace /　/
+	augroup END
+	call TwoByteCharSpace()
+endif
+
+set t_Co=256
+set cursorline
+hi clear CursorLine
+hi CursorLine gui=underline
+highlight CursorLine term=none cterm=none ctermfg=none ctermbg=233
+
+" カレントウィンドウのみ罫線を引く
+augroup cch
+	autocmd! cch
+	autocmd WinLeave * set nocursorline
+	autocmd WinEnter,BufRead * set cursorline
+augroup END
