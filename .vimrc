@@ -40,6 +40,11 @@ for i in range(1, 9)
 	execute 'nnoremap <Tab>' . i . ' ' . i . 'gt'
 endfor
 
+"C-w gf をtgで開けるようにする
+nnoremap <silent> tg <C-w>gf
+nnoremap vg :vertical wincmd f<CR>
+nnoremap <silent> sg <C-w>f
+
 "=== for PHP setting 
 "syntax check
 autocmd filetype php :set makeprg=php\ -l\ %
@@ -114,6 +119,9 @@ autocmd VimEnter * TagbarToggle
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 " ファイル一覧
 nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> ,ufa :<C-u>Unite -input=**/* file<CR>
+nnoremap <silent> ,ff :<C-u>Unite file<CR>
+nnoremap <silent> ,ffa :<C-u>Unite -input=**/* file<CR>
 " レジスタ一覧
 nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
 " 最近使用したファイル一覧
@@ -199,7 +207,7 @@ if has('syntax')
 	call TwoByteCharSpace()
 endif
 
-set t_Co=256
+"set t_Co=256
 set cursorline
 hi clear CursorLine
 hi CursorLine gui=underline
