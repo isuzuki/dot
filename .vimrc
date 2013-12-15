@@ -45,7 +45,7 @@ nnoremap <silent> tg <C-w>gf
 nnoremap vg :vertical wincmd f<CR>
 nnoremap <silent> sg <C-w>f
 
-"=== for PHP setting 
+"=== for PHP setting
 "syntax check
 autocmd filetype php :set makeprg=php\ -l\ %
 autocmd filetype php :set errorformat=%m\ in\ %f\ on\ line\ %l
@@ -72,6 +72,7 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'tomasr/molokai'
+NeoBundle 'tpope/vim-rails'
 
 nmap <F1> :NeoBundleInstall<CR>
 
@@ -145,6 +146,18 @@ nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
 nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
 " 全部乗せ
 nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+" grep検索
+nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+" カーソル位置の単語をgrep検索
+nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+" grep検索結果の再呼出
+nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
+" unite grep に ag(The Silver Searcher) を使う
+if executable('ag')
+	let g:unite_source_grep_command = 'ag'
+	let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+	let g:unite_source_grep_recursive_opt = ''
+endif
 
 " ウィンドウを分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
@@ -221,6 +234,13 @@ if has('syntax')
 	augroup END
 	call TwoByteCharSpace()
 endif
+
+" 末尾スペースのハイライト
+augroup HighlightTrailingSpaces
+	autocmd!
+	autocmd VimEnter,WinEnter,ColorScheme * highlight TrailingSpaces term=underline guibg=Blue ctermbg=Blue
+	autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
+augroup END
 
 "set t_Co=256
 set cursorline
