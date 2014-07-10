@@ -15,10 +15,10 @@
 	grep        = auto
 
 [alias]
-	# http://blog.blindgaenger.net/advanced_git_aliases.html
 	alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
 	br = branch
 	ci = commit -va
 	co = checkout
 	di = diff
 	st = status
+	delete-merged-br = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
