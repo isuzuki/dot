@@ -1,3 +1,6 @@
+"NeoBundleで管理しているpluginの読み込み
+source ~/.vimrc.bundle
+
 "color
 syntax on
 colorscheme darkblue
@@ -49,35 +52,6 @@ nnoremap <silent> sg <C-w>f
 "syntax check
 autocmd filetype php :set makeprg=php\ -l\ %
 autocmd filetype php :set errorformat=%m\ in\ %f\ on\ line\ %l
-
-"=== for NeoBundle
-filetype off
-
-if has('vim_starting')
-	set runtimepath+=~/.vim/bundle/neobundle.vim
-	call neobundle#rc(expand('~/.vim/bundle/'))
-endif
-
-"get plugin from github
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler'
-NeoBundle 'vim-scripts/sudo.vim'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'rking/ag.vim'
-NeoBundle 'thinca/vim-ref'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'gregsexton/gitv'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'tpope/vim-rails'
-
-nmap <F1> :NeoBundleInstall<CR>
-
-filetype plugin indent on
-filetype indent on
 
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags

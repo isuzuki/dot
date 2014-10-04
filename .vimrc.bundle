@@ -1,0 +1,28 @@
+"vim起動時に有効
+if has('vim_starting')
+	set runtimepath+=~/.vim/bundle/neobundle.vim
+endif
+
+call neobundle#rc(expand('~/.vim/bundle/'))
+
+"NeoBundle自体をNeoBundleで管理
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+"get plugin from github
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimfiler'
+NeoBundle 'vim-scripts/sudo.vim'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'rking/ag.vim'
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'gregsexton/gitv'
+NeoBundle 'tomasr/molokai'
+NeoBundle 'tpope/vim-rails'
+
+filetype plugin indent on
+filetype indent on
