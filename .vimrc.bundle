@@ -26,6 +26,7 @@ NeoBundle 'tpope/vim-rails'
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'mattn/emmet-vim'
 
 filetype plugin indent on
 filetype indent on
