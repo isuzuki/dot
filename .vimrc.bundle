@@ -30,6 +30,7 @@ NeoBundle 'mattn/emmet-vim'
 NeoBundle 'taichouchou2/html5.vim'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'jQuery'
 
 filetype plugin indent on
 filetype indent on
