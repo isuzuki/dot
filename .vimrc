@@ -1,40 +1,9 @@
 "NeoBundleで管理しているpluginの読み込み
 source ~/.vimrc.bundle
 
-"color
-syntax on
-colorscheme darkblue
+"基本設定
+source ~/.vimrc.basic
 
-"encode
-set encoding=utf-8
-set fileencoding=utf-8
-
-set list
-set listchars=tab:▸\ ,eol:¬
-
-"indent
-set autoindent
-set cindent
-set shiftwidth=4
-set tabstop=4
-
-"search
-set incsearch
-set hlsearch
-
-"key move
-set nocompatible
-set whichwrap=b,s,h,l,<,>,[,]
-
-"display
-set number
-set ruler
-
-"status line
-set laststatus=2
-set statusline=%F%m%r%h%w\ [ENCORDING=%{&enc}]\ [FORMAT=%{&fileformat}]
-
-set visualbell
 
 "tab
 nnoremap <C-h> gt
@@ -193,38 +162,3 @@ function! s:my_gitv_settings()
 	nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
 	nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 endfunction
-
-
-" 全角スペースをハイライトさせる
-function! TwoByteCharSpace()
-	highlight TwoByteCharSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
-endfunction
-
-if has('syntax')
-	augroup TwoByteCharSpace
-		autocmd!
-		autocmd ColorScheme       * call TwoByteCharSpace()
-		autocmd VimEnter,WinEnter * match TwoByteCharSpace /　/
-	augroup END
-	call TwoByteCharSpace()
-endif
-
-" 末尾スペースのハイライト
-augroup HighlightTrailingSpaces
-	autocmd!
-	autocmd VimEnter,WinEnter,ColorScheme * highlight TrailingSpaces term=underline guibg=Blue ctermbg=Blue
-	autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
-augroup END
-
-"set t_Co=256
-set cursorline
-hi clear CursorLine
-hi CursorLine gui=underline
-highlight CursorLine term=none cterm=none ctermfg=none ctermbg=233
-
-" カレントウィンドウのみ罫線を引く
-augroup cch
-	autocmd! cch
-	autocmd WinLeave * set nocursorline
-	autocmd WinEnter,BufRead * set cursorline
-augroup END
