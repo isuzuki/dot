@@ -1,37 +1,9 @@
-"color
-syntax on
-colorscheme darkblue
+"NeoBundleで管理しているpluginの読み込み
+source ~/.vimrc.bundle
 
-"encode
-set encoding=utf-8
-set fileencoding=utf-8
+"基本設定
+source ~/.vimrc.basic
 
-set list
-set listchars=tab:▸\ ,eol:¬
-
-"indent
-set autoindent
-set cindent
-set shiftwidth=4
-set tabstop=4
-
-"search
-set incsearch
-set hlsearch
-
-"key move
-set nocompatible
-set whichwrap=b,s,h,l,<,>,[,]
-
-"display
-set number
-set ruler
-
-"status line
-set laststatus=2
-set statusline=%F%m%r%h%w\ [ENCORDING=%{&enc}]\ [FORMAT=%{&fileformat}]
-
-set visualbell
 
 "tab
 nnoremap <C-h> gt
@@ -49,35 +21,6 @@ nnoremap <silent> sg <C-w>f
 "syntax check
 autocmd filetype php :set makeprg=php\ -l\ %
 autocmd filetype php :set errorformat=%m\ in\ %f\ on\ line\ %l
-
-"=== for NeoBundle
-filetype off
-
-if has('vim_starting')
-	set runtimepath+=~/.vim/bundle/neobundle.vim
-	call neobundle#rc(expand('~/.vim/bundle/'))
-endif
-
-"get plugin from github
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/vimproc'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler'
-NeoBundle 'vim-scripts/sudo.vim'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'rking/ag.vim'
-NeoBundle 'thinca/vim-ref'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'gregsexton/gitv'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'tpope/vim-rails'
-
-nmap <F1> :NeoBundleInstall<CR>
-
-filetype plugin indent on
-filetype indent on
 
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
@@ -219,38 +162,3 @@ function! s:my_gitv_settings()
 	nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
 	nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 endfunction
-
-
-" 全角スペースをハイライトさせる
-function! TwoByteCharSpace()
-	highlight TwoByteCharSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
-endfunction
-
-if has('syntax')
-	augroup TwoByteCharSpace
-		autocmd!
-		autocmd ColorScheme       * call TwoByteCharSpace()
-		autocmd VimEnter,WinEnter * match TwoByteCharSpace /　/
-	augroup END
-	call TwoByteCharSpace()
-endif
-
-" 末尾スペースのハイライト
-augroup HighlightTrailingSpaces
-	autocmd!
-	autocmd VimEnter,WinEnter,ColorScheme * highlight TrailingSpaces term=underline guibg=Blue ctermbg=Blue
-	autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
-augroup END
-
-"set t_Co=256
-set cursorline
-hi clear CursorLine
-hi CursorLine gui=underline
-highlight CursorLine term=none cterm=none ctermfg=none ctermbg=233
-
-" カレントウィンドウのみ罫線を引く
-augroup cch
-	autocmd! cch
-	autocmd WinLeave * set nocursorline
-	autocmd WinEnter,BufRead * set cursorline
-augroup END
