@@ -40,7 +40,6 @@ let g:tagbar_type_php = {
 \ }
 
 nmap <F8> :TagbarToggle<CR>
-autocmd VimEnter * TagbarToggle
 
 "unite.vim
 " 入力モードで開始する
