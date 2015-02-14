@@ -117,14 +117,14 @@ call unite#custom_default_action('file', 'tabopen')
 "vimfiler
 nnoremap <F2> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<Cr>
 autocmd! FileType vimfiler call g:my_vimfiler_settings()
-function! g:my_vimfiler_settings()
+function! s:my_vimfiler_settings()
 	nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 	nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
 	nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
 endfunction
 
 "Edit file by tabedit.
-let g:vimfiler_edit_action = 'tabopen'
+let s:vimfiler_edit_action = 'tabopen'
 
 let s:my_action = { 'is_selectable' : 1 }
 function! s:my_action.func(candidates)
