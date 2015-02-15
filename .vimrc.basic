@@ -33,6 +33,7 @@ set statusline=%F%m%r%h%w\ [ENCORDING=%{&enc}]\ [FORMAT=%{&fileformat}]
 
 set visualbell
 
+set backspace=2
 
 " 全角スペースをハイライトさせる
 function! TwoByteCharSpace()
