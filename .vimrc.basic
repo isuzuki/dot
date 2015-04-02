@@ -1,13 +1,29 @@
-"color
-syntax on
-colorscheme darkblue
+" generic options {{{
+set nobackup
+set noswapfile
 
-"encode
-set encoding=utf-8
-set fileencoding=utf-8
+" display
+syntax enable
+set t_Co=256
+set background=dark
+let g:hybrid_use_Xresources = 1
+colorscheme hybrid
+set laststatus=2
 
+filetype plugin indent on
+filetype indent on
 set list
 set listchars=tab:▸\ ,eol:¬
+set number
+set ruler
+
+
+" search
+set ignorecase
+set incsearch
+set hlsearch
+set smartcase
+set wrapscan
 
 "indent
 set autoindent
@@ -15,25 +31,33 @@ set cindent
 set shiftwidth=4
 set tabstop=4
 
-"search
-set incsearch
-set hlsearch
-
 "key move
-set nocompatible
 set whichwrap=b,s,h,l,<,>,[,]
 
-"display
-set number
-set ruler
-
-"status line
-set laststatus=2
-set statusline=%F%m%r%h%w\ [ENCORDING=%{&enc}]\ [FORMAT=%{&fileformat}]
-
-set visualbell
-
 set backspace=2
+
+" }}}
+
+" custom settings {{{
+" タブ切り替えのキーマッピング
+nnoremap <C-h> gt
+nnoremap <C-l> gT
+for i in range(1, 9)
+	execute 'nnoremap <Tab>' . i . ' ' . i . 'gt'
+endfor
+
+" カレントラインをハイライト
+set cursorline
+hi clear CursorLine
+hi CursorLine gui=underline
+highlight CursorLine term=none cterm=none ctermfg=none ctermbg=233
+
+" カレントウィンドウのみ罫線を引く
+augroup cch
+	autocmd! cch
+	autocmd WinLeave * set nocursorline
+	autocmd WinEnter,BufRead * set cursorline
+augroup END
 
 " 全角スペースをハイライトさせる
 function! TwoByteCharSpace()
@@ -56,15 +80,4 @@ augroup HighlightTrailingSpaces
 	autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
 augroup END
 
-"set t_Co=256
-set cursorline
-hi clear CursorLine
-hi CursorLine gui=underline
-highlight CursorLine term=none cterm=none ctermfg=none ctermbg=233
-
-" カレントウィンドウのみ罫線を引く
-augroup cch
-	autocmd! cch
-	autocmd WinLeave * set nocursorline
-	autocmd WinEnter,BufRead * set cursorline
-augroup END
+" }}}
