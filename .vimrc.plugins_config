@@ -109,16 +109,18 @@ endif
 
 
 " vimfiler {{{
+" vimfilerをデフォルトファイラーにする
+let g:vimfiler_as_default_explorer=1
+" 編集するファイルをタブで開く
+let s:vimfiler_edit_action = 'tabopen'
+
 nnoremap <F2> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<Cr>
-autocmd! FileType vimfiler call g:my_vimfiler_settings()
+autocmd! FileType vimfiler call s:my_vimfiler_settings()
 function! s:my_vimfiler_settings()
 	nmap     <buffer><expr><Cr> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 	nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
 	nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
 endfunction
-
-"Edit file by tabedit.
-let s:vimfiler_edit_action = 'tabopen'
 
 let s:my_action = { 'is_selectable' : 1 }
 function! s:my_action.func(candidates)
@@ -257,4 +259,18 @@ let g:gitgutter_sign_added = '✚'
 let g:gitgutter_sign_modified = '➜'
 let g:gitgutter_sign_removed = '✘'
 
+" }}}
+
+" emmet {{{
+let g:user_emmet_settings = {
+	\ 'variables': {
+		\ 'lang': 'ja',
+		\ 'locale': 'ja-JP'
+	\ }
+\ }
+
+" }}}
+
+" gundo {{{
+nnoremap U :GundoToggle<CR>
 " }}}

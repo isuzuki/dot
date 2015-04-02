@@ -25,6 +25,8 @@ NeoBundle 'rking/ag.vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'vim-scripts/sudo.vim'
+NeoBundle 'sjl/gundo.vim'
+NeoBundle 'othree/eregex.vim'
 
 " }}}
 
