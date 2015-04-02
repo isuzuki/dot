@@ -10,8 +10,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 call neobundle#end()
 
-
-"get plugin from github
+" utility {{{
 NeoBundle 'Shougo/vimproc.vim', {
 	\ 'build' : {
 	\ 'windows' : 'make -f make_mingw32.mak',
@@ -21,28 +20,61 @@ NeoBundle 'Shougo/vimproc.vim', {
 	\ },
 \ }
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'vim-scripts/sudo.vim'
-NeoBundle 'majutsushi/tagbar'
 NeoBundle 'rking/ag.vim'
-NeoBundle 'thinca/vim-ref'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'vim-scripts/sudo.vim'
+
+" }}}
+
+" filer {{{
+NeoBundle 'Shougo/vimfiler'
+
+" }}}
+
+" display settings {{{
+" color schemes
+NeoBundle 'w0ng/vim-hybrid'
+
+" status line
+NeoBundle 'itchyny/lightline.vim'
+
+" }}}
+
+" git {{{
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'airblade/vim-gitgutter'
+
+" }}}
+
+" preview {{{
 NeoBundle 'kannokanno/previm'
 NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'mattn/emmet-vim'
-NeoBundle 'taichouchou2/html5.vim'
-NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'jelera/vim-javascript-syntax'
-NeoBundle 'jQuery'
 
-filetype plugin indent on
-filetype indent on
+" }}}
+
+" for programming {{{
+" syntax check
+NeoBundle 'scrooloose/syntastic'
+
+" html, css
+NeoBundle 'mattn/emmet-vim'
+" vim7.4でwarningが出るので無効にする
+"NeoBundle 'taichouchou2/html5.vim'
+NeoBundleLazy 'hail2u/vim-css3-syntax', {'autoload':{'filetypes':['css']}}
+
+" Markdown
+NeoBundle 'plasticboy/vim-markdown'
+
+" Javascript
+NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+NeoBundleLazy 'jQuery', {'autoload':{'filetypes':['javascript']}}
+
+" Ruby
+NeoBundleLazy 'tpope/vim-rails', {'autoload':{'filetypes':['ruby']}}
+
+" }}}
 
 NeoBundleCheck

@@ -1,5 +1,4 @@
-"=== for vim plugin
-" neocomplcache
+" neocomplcache {{{
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_max_list = 30
 let g:neocomplcache_auto_completion_start_length = 2
@@ -22,11 +21,11 @@ inoremap <expr><BS> neocomplcache#smart_close_popup() . "\<C-h>"
 inoremap <expr><C-y> neocomplcache#close_popup()
 inoremap <expr><C-e> neocomplcache#cancel_popup()
 
-"vim-ref
-let g:ref_phpmanual_path = $HOME . '/.vim/phpmanual'
-nmap ,rp :<C-u>Ref phpmanual<Space>
+" }}}
 
-"tagbar
+" tagbar {{{
+nmap <F8> :TagbarToggle<CR>
+
 "hide variables
 let g:tagbar_type_php = {
 	\ 'ctagstype' : 'php',
@@ -39,11 +38,34 @@ let g:tagbar_type_php = {
 	\ ]
 \ }
 
-nmap <F8> :TagbarToggle<CR>
+" }}}
 
-"unite.vim
-" 入力モードで開始する
-" let g:unite_enable_start_insert=1
+" unite.vim {{{
+" 大文字小文字を区別しない
+let g:unite_enable_ignore_case = 1
+let g:unite_enable_smart_case = 1
+
+" ファイルをタブで開く
+call unite#custom_default_action('file', 'tabopen')
+
+" ファイル一覧から除外する
+" gitignoreからuniteのignore globsに設定する
+function! s:unite_ignore_globs_gitignore()
+	if filereadable('.gitignore')
+		let patterns = []
+		for line in readfile('.gitignore')
+			" ディレクトリを対象外にする
+			if line =~ "^/"
+				call add(patterns, line .'**')
+			endif
+		endfor
+		call unite#custom#source('file', 'ignore_globs', patterns)
+		call unite#custom#source('file_rec', 'ignore_globs', patterns)
+		call unite#custom#source('grep', 'ignore_globs', patterns)
+	endif
+endfunction
+call s:unite_ignore_globs_gitignore()
+
 " バッファ一覧
 nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
 " ファイル一覧
@@ -65,12 +87,6 @@ nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 " grep検索結果の再呼出
 nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
-" unite grep に ag(The Silver Searcher) を使う
-if executable('ag')
-	let g:unite_source_grep_command = 'ag'
-	let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-	let g:unite_source_grep_recursive_opt = ''
-endif
 
 " ウィンドウを分割して開く
 au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
@@ -82,9 +98,17 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vspli
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 
-call unite#custom_default_action('file', 'tabopen')
+" unite grep に ag(The Silver Searcher) を使う
+if executable('ag')
+	let g:unite_source_grep_command = 'ag'
+	let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+	let g:unite_source_grep_recursive_opt = ''
+endif
 
-"vimfiler
+" }}}
+
+
+" vimfiler {{{
 nnoremap <F2> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<Cr>
 autocmd! FileType vimfiler call g:my_vimfiler_settings()
 function! s:my_vimfiler_settings()
@@ -110,7 +134,95 @@ function! s:my_action.func(candidates)
 endfunction
 call unite#custom_action('file', 'my_vsplit', s:my_action)
 
-"giv
+" }}}
+
+" lightline {{{
+let g:lightline = {
+	\ 'colorscheme': 'landscape',
+	\ 'mode_map': { 'c': 'NORMAL' },
+	\ 'active': {
+		\'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'gitgutter', 'filename' ] ]
+	\ },
+	\ 'component_function': {
+		\ 'modified': 'MyModified',
+		\ 'readonly': 'MyReadonly',
+		\ 'fugitive': 'MyFugitive',
+		\ 'filename': 'MyFilename',
+		\ 'fileformat': 'MyFileformat',
+		\ 'filetype': 'MyFiletype',
+		\ 'fileencoding': 'MyFileencoding',
+		\ 'mode': 'MyMode',
+		\ 'gitgutter': 'MyGitGutter',
+	\ },
+	\ 'separator': { 'left': '', 'right': '|' },
+	\ 'subseparator': { 'left': '', 'right': '|' }
+	\ }
+
+function! MyModified()
+	return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+	return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+endfunction
+
+function! MyFilename()
+	return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+		\ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+		\  &ft == 'unite' ? unite#get_status_string() :
+		\  &ft == 'vimshell' ? vimshell#get_status_string() :
+		\ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+		\ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+	if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+		let _ = fugitive#head()
+		return strlen(_) ? ':'._ : ''
+	endif
+	return ''
+endfunction
+
+function! MyFileformat()
+	return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+	return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+	return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+	return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! MyGitGutter()
+	if ! exists('*GitGutterGetHunkSummary')
+		\ || ! get(g:, 'gitgutter_enabled', 0)
+		\ || winwidth('.') <= 90
+		return ''
+	endif
+	let symbols = [
+		\ g:gitgutter_sign_added . ' ',
+		\ g:gitgutter_sign_modified . ' ',
+		\ g:gitgutter_sign_removed . ' '
+	\ ]
+	let hunks = GitGutterGetHunkSummary()
+	let ret = []
+	for i in [0, 1, 2]
+		if hunks[i] > 0
+			call add(ret, symbols[i] . hunks[i])
+		endif
+	endfor
+	return join(ret, ' ')
+endfunction
+
+" }}}
+
+" gitv {{{
 function! s:gitv_get_current_hash()
 	return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')
 endfunction
@@ -132,3 +244,17 @@ function! s:my_gitv_settings()
 	nnoremap <buffer> <Space>rh :<C-u>Git reset --hard <C-r>=GitvGetCurrentHash()<CR>
 	nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 endfunction
+
+" }}}
+
+" vim-gitgutter {{{
+nmap <silent> ,gg :<C-u>GitGutterToggle<CR>
+nmap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
+nmap ]h <Plug>GitGutterNextHunk
+nmap [h <Plug>GitGutterPrevHunk
+
+let g:gitgutter_sign_added = '✚'
+let g:gitgutter_sign_modified = '➜'
+let g:gitgutter_sign_removed = '✘'
+
+" }}}
