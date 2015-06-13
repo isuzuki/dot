@@ -109,7 +109,7 @@ endif
 
 
 " vimfiler {{{
-" vimfilerをデフォルトファイラーにする
+" vimfilerをデフォルトのファイラーにする
 let g:vimfiler_as_default_explorer=1
 " 編集するファイルをタブで開く
 let s:vimfiler_edit_action = 'tabopen'
