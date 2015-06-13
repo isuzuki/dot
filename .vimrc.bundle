@@ -3,12 +3,11 @@ if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
 
+" Required:
 call neobundle#begin(expand('~/.vim/bundle/'))
 
 "NeoBundle自体をNeoBundleで管理
 NeoBundleFetch 'Shougo/neobundle.vim'
-
-call neobundle#end()
 
 " utility {{{
 NeoBundle 'Shougo/vimproc.vim', {
@@ -78,5 +77,7 @@ NeoBundleLazy 'jQuery', {'autoload':{'filetypes':['javascript']}}
 NeoBundleLazy 'tpope/vim-rails', {'autoload':{'filetypes':['ruby']}}
 
 " }}}
+
+call neobundle#end()
 
 NeoBundleCheck
