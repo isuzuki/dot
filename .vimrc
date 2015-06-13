@@ -16,6 +16,7 @@ set noerrorbells
 " source vimrc files {{{
 source ~/.vimrc.bundle
 source ~/.vimrc.basic
+source ~/.vimrc.filetypes
 source ~/.vimrc.plugins_config
 
 " }}}
