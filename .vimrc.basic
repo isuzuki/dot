@@ -80,6 +80,16 @@ augroup HighlightTrailingSpaces
 	autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
 augroup END
 
+" 保存時に行末の空白を除去する
+function! s:remove_dust()
+	let cursor = getpos(".")
+	" 保存時に行末の空白を除去する
+	%s/\s\+$//ge
+	call setpos(".", cursor)
+	unlet cursor
+endfunction
+autocmd BufWritePre * call <SID>remove_dust()
+
 " 独自設定ファイルを読み込ませる
 augroup vimrc-local
 	autocmd!

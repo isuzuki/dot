@@ -26,6 +26,7 @@ NeoBundle 'majutsushi/tagbar'
 NeoBundle 'vim-scripts/sudo.vim'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'othree/eregex.vim'
+NeoBundle 'h1mesuke/vim-alignta'
 
 " }}}
 
