@@ -27,7 +27,7 @@ formulas=(
 	# Shell
 	zsh
 	zsh-completions
-	paco
+	peco
 
 	# Multiplexe
 	tmux
@@ -52,6 +52,8 @@ formulas=(
 
 	# Operations
 	ansible
+	docker
+	docker-machine
 
 )
 
