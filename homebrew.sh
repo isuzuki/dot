@@ -46,6 +46,7 @@ formulas=(
 
 	# Languages
 	go
+	lua
 
 	# Languages syntax
 	shellcheck
