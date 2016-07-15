@@ -56,6 +56,9 @@ formulas=(
 	docker
 	docker-machine
 
+	# PaaS
+	heroku-toolbelt
+
 )
 
 echo "Installing formulas..."
