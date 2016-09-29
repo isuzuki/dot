@@ -54,6 +54,9 @@ call dein#add('mattn/emmet-vim')
 call dein#add('plasticboy/vim-markdown')
 call dein#add('tpope/vim-rails')
 
+" PHP
+call dein#add('stephpy/vim-php-cs-fixer')
+
 call dein#end()
 
 filetype plugin indent on

@@ -276,3 +276,16 @@ let g:user_emmet_settings = {
 " gundo {{{
 nnoremap U :GundoToggle<CR>
 " }}}
+
+" ====================¬
+" vim-php-cs-fixer
+" ====================¬
+let g:php_cs_fixer_config = 'default'
+let g:php_cs_fixer_dry_run = 0
+let g:php_cs_fixer_enable_default_mapping = 1
+let g:php_cs_fixer_level = 'psr2'
+let g:php_cs_fixer_php_path = 'php'
+let g:php_cs_fixer_verbose = 0
+
+nnoremap <silent> ,pcd :call PhpCsFixerFixDirectory()<CR>
+nnoremap <silent> ,pcf :call PhpCsFixerFixFile()<CR>
