@@ -93,6 +93,9 @@ if [ -d "$NVM_DIR" ]; then
 	source $NVM_DIR/nvm.sh
 fi
 
+# Browsersync
+alias bs="browser-sync start --server --files '**/*'"
+
 # 各環境ごとの設定を記述
 if [  -f "$HOME/.zshrc.local" ]; then
 	source "$HOME/.zshrc.local"
