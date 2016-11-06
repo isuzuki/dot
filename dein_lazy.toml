@@ -1,0 +1,27 @@
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+on_i = 1
+
+[[plugins]]
+repo = 'honza/vim-snippets'
+on_i = 1
+
+[[plugins]]
+repo = 'vim-scripts/sudo.vim'
+on_i = 1
+
+[[plugins]]
+repo = 'sjl/gundo.vim'
+on_i = 1
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+on_i = 1
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = 'html'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'

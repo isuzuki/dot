@@ -1,13 +1,19 @@
-" ====================¬
-" neocomplete
-" ====================¬
+" neocomplete {{{
+
+" use neocomplete.
 let g:neocomplete#enable_at_startup = 1
+" display pop-up list
 let g:neocomplete#max_list = 10
-let g:neocomplete#auto_completion_start_length = 2
+" use smartcase
 let g:neocomplete#enable_smart_case = 1
+" use auto select first candidate
 let g:neocomplete#enable_auto_select = 1
+" use camelcase
 let g:neocomplete#enable_camel_case_completion = 1
+" use snakecase
 let g:neocomplete#enable_underbar_completion = 1
+
+" key mappings
 inoremap <expr><C-g> neocomplete#undo_completion()
 inoremap <expr><C-l> neocomplete#complete_common_string()
 "" SuperTab like snippets behavior.
@@ -21,8 +27,120 @@ inoremap <expr><BS> neocomplete#smart_close_popup() . "\<C-h>"
 inoremap <expr><C-y> neocomplete#close_popup()
 inoremap <expr><C-e> neocomplete#cancel_popup()
 
-" syntastic {{{
+" omni completion
+if !exists('g:neocomplete#sources#omni#input_patterns')
+	let g:neocomplete#sources#omni#input_patterns = {}
+endif
+
+" programming languages
+let g:neocomplete#sources#omni#input_patterns.php =
+	\'\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+
+" }}}
+
+" neosnippet.vim {{{
+
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+imap <silent>S     <Plug>(neosnippet_start_unite_snippet)
+xmap <silent>o     <Plug>(neosnippet_register_oneshot_snippet)
+
+" SuperTab like snippets behavior.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#enable_complete_done = 1
+let g:neosnippet#expand_word_boundary = 1
+
+let g:neosnippet#snippets_directory = '~/.vim/cache/dein/repos/github.com/honza/vim-snippets/snippets'
+
+inoremap <silent> (( <C-r>=neosnippet#anonymous('\left(${1}\right)${0}')<CR>
+
+" }}}
+
+" unite.vim {{{
+
+" file open on tab
+call unite#custom#default_action('file', 'tabopen')
+
+" exclude gitignore
+function! s:unite_ignore_globs_gitignore()
+	if filereadable('.gitignore')
+		let patterns = []
+		for line in readfile('.gitignore')
+			" ディレクトリを対象外にする
+			if line =~ "^/"
+				call add(patterns, line .'**')
+			endif
+		endfor
+		call unite#custom#source('file', 'ignore_globs', patterns)
+		call unite#custom#source('file_rec', 'ignore_globs', patterns)
+		call unite#custom#source('grep', 'ignore_globs', patterns)
+	endif
+endfunction
+call s:unite_ignore_globs_gitignore()
+
+" key mappings
+" buffer list
+nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
+" file list
+nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+nnoremap <silent> ,ufa :<C-u>Unite -input=**/* file<CR>
+nnoremap <silent> ,ff :<C-u>Unite file<CR>
+nnoremap <silent> ,ffa :<C-u>Unite -input=**/* file<CR>
+" register list
+nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register history/yank<CR>
+" recently used list
+nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
+nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
+" all list
+nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
+" grep search
+nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+" grep search on cursor word
+nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+" reload grep searched results
+nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
+
+" open window split
+au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
+" open window vsplit
+au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
+au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
+" end esc key double click
+au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
+au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
+
+" unite grep use ag(the silver searcher)
+if executable('ag')
+	" https://github.com/ggreer/the_silver_searcher
+	let g:unite_source_grep_command = 'ag'
+	let g:unite_source_grep_default_opts =
+		\ '-i --vimgrep --hidden --ignore ' .
+		\  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+	let g:unite_source_grep_recursive_opt = ''
+endif
+
+" }}}
+
+" gundo {{{
+"
+nnoremap U :GundoToggle<CR>
+
+" }}}
+
+"syntastic {{{
+
 let g:syntastic_sh_checkers = ['shellcheck']
+
 " }}}
 
 " tagbar {{{
@@ -42,78 +160,11 @@ let g:tagbar_type_php = {
 
 " }}}
 
-" unite.vim {{{
-" 大文字小文字を区別しない
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-
-" ファイルをタブで開く
-call unite#custom_default_action('file', 'tabopen')
-
-" ファイル一覧から除外する
-" gitignoreからuniteのignore globsに設定する
-function! s:unite_ignore_globs_gitignore()
-	if filereadable('.gitignore')
-		let patterns = []
-		for line in readfile('.gitignore')
-			" ディレクトリを対象外にする
-			if line =~ "^/"
-				call add(patterns, line .'**')
-			endif
-		endfor
-		call unite#custom#source('file', 'ignore_globs', patterns)
-		call unite#custom#source('file_rec', 'ignore_globs', patterns)
-		call unite#custom#source('grep', 'ignore_globs', patterns)
-	endif
-endfunction
-call s:unite_ignore_globs_gitignore()
-
-" バッファ一覧
-nnoremap <silent> ,ub :<C-u>Unite buffer<CR>
-" ファイル一覧
-nnoremap <silent> ,uf :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-nnoremap <silent> ,ufa :<C-u>Unite -input=**/* file<CR>
-nnoremap <silent> ,ff :<C-u>Unite file<CR>
-nnoremap <silent> ,ffa :<C-u>Unite -input=**/* file<CR>
-" レジスタ一覧
-nnoremap <silent> ,ur :<C-u>Unite -buffer-name=register register<CR>
-" 最近使用したファイル一覧
-nnoremap <silent> ,um :<C-u>Unite file_mru<CR>
-" 常用セット
-nnoremap <silent> ,uu :<C-u>Unite buffer file_mru<CR>
-" 全部乗せ
-nnoremap <silent> ,ua :<C-u>UniteWithBufferDir -buffer-name=files buffer file_mru bookmark file<CR>
-" grep検索
-nnoremap <silent> ,g  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-" カーソル位置の単語をgrep検索
-nnoremap <silent> ,cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-" grep検索結果の再呼出
-nnoremap <silent> ,r  :<C-u>UniteResume search-buffer<CR>
-
-" ウィンドウを分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-" ウィンドウを縦に分割して開く
-au FileType unite nnoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> <C-l> unite#do_action('vsplit')
-" ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
-
-" unite grep に ag(The Silver Searcher) を使う
-if executable('ag')
-	let g:unite_source_grep_command = 'ag'
-	let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-	let g:unite_source_grep_recursive_opt = ''
-endif
-
-" }}}
-
-
 " vimfiler {{{
-" vimfilerをデフォルトのファイラーにする
+
+" set default filer
 let g:vimfiler_as_default_explorer=1
-" 編集するファイルをタブで開く
+" file open new tab
 let s:vimfiler_edit_action = 'tabopen'
 
 nnoremap <F2> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<Cr>
@@ -141,6 +192,7 @@ call unite#custom_action('file', 'my_vsplit', s:my_action)
 " }}}
 
 " lightline {{{
+
 let g:lightline = {
 	\ 'colorscheme': 'landscape',
 	\ 'mode_map': { 'c': 'NORMAL' },
@@ -252,6 +304,7 @@ endfunction
 " }}}
 
 " vim-gitgutter {{{
+
 nmap <silent> ,gg :<C-u>GitGutterToggle<CR>
 nmap <silent> ,gh :<C-u>GitGutterLineHighlightsToggle<CR>
 nmap ]h <Plug>GitGutterNextHunk
@@ -264,6 +317,7 @@ let g:gitgutter_sign_removed = '✘'
 " }}}
 
 " emmet {{{
+
 let g:user_emmet_settings = {
 	\ 'variables': {
 		\ 'lang': 'ja',
@@ -273,19 +327,22 @@ let g:user_emmet_settings = {
 
 " }}}
 
-" gundo {{{
-nnoremap U :GundoToggle<CR>
-" }}}
-
-" ====================¬
-" vim-php-cs-fixer
-" ====================¬
-let g:php_cs_fixer_config = 'default'
-let g:php_cs_fixer_dry_run = 0
-let g:php_cs_fixer_enable_default_mapping = 1
-let g:php_cs_fixer_level = 'psr2'
-let g:php_cs_fixer_php_path = 'php'
-let g:php_cs_fixer_verbose = 0
-
-nnoremap <silent> ,pcd :call PhpCsFixerFixDirectory()<CR>
-nnoremap <silent> ,pcf :call PhpCsFixerFixFile()<CR>
+"" ====================¬
+"" javascript-libraries-syntax
+""
+"" Javascript libraries syntax highlighting
+"" ====================¬
+"let g:used_javascript_libs = 'angularjs,jasmine,jquery'
+"
+"" ====================¬
+"" vim-php-cs-fixer
+"" ====================¬
+"let g:php_cs_fixer_config = 'default'
+"let g:php_cs_fixer_dry_run = 0
+"let g:php_cs_fixer_enable_default_mapping = 1
+"let g:php_cs_fixer_level = 'psr2'
+"let g:php_cs_fixer_php_path = 'php'
+"let g:php_cs_fixer_verbose = 0
+"
+"nnoremap <silent> ,pcd :call PhpCsFixerFixDirectory()<CR>
+"nnoremap <silent> ,pcf :call PhpCsFixerFixFile()<CR>

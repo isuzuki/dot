@@ -1,0 +1,64 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+rtp = ''
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+[[plugins]] # color scheme
+repo = 'w0ng/vim-hybrid'
+
+[[plugins]] # custom status line
+repo = 'itchyny/lightline.vim'
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+depends = 'neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+depends = 'unite.vim'
+
+[[plugins]]
+repo = 'majutsushi/tagbar'
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = 'neosnippet-snippets'
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+
+[[plugins]] # search
+repo = 'rking/ag.vim'
+
+[[plugins]] # diff current and git
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]] # enable git command on vim
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'gregsexton/gitv'
+
+[[plugins]]
+repo = 'othree/eregex.vim'
+
+[[plugins]]
+repo = 'h1mesuke/vim-alignta'
+
+[[plugins]] # preview
+repo = 'kannokanno/previm'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+
+[[plugins]] # check syntax
+repo ='scrooloose/syntastic'
