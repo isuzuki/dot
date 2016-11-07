@@ -1,4 +1,5 @@
-" generic options {{{
+" options {{{
+
 set nobackup
 set noswapfile
 
@@ -17,7 +18,6 @@ set listchars=tab:▸\ ,eol:¬
 set number
 set ruler
 
-
 " search
 set ignorecase
 set incsearch
@@ -28,79 +28,93 @@ set wrapscan
 "indent
 set autoindent
 set cindent
+set expandtab
 set shiftwidth=4
 set tabstop=4
 
 "key move
 set whichwrap=b,s,h,l,<,>,[,]
-
 set backspace=2
 
 " }}}
 
-" custom settings {{{
-" タブ切り替えのキーマッピング
+" key mapping for tab switch {{{
+
 nnoremap <C-h> gt
 nnoremap <C-l> gT
 for i in range(1, 9)
-	execute 'nnoremap <Tab>' . i . ' ' . i . 'gt'
+  execute 'nnoremap <Tab>' . i . ' ' . i . 'gt'
 endfor
 
-" カレントラインをハイライト
+" }}}
+
+" cursor current line {{{
+
 set cursorline
 hi clear CursorLine
 hi CursorLine gui=underline
 highlight CursorLine term=none cterm=none ctermfg=none ctermbg=233
 
-" カレントウィンドウのみ罫線を引く
+" cursor only current window
 augroup cch
-	autocmd! cch
-	autocmd WinLeave * set nocursorline
-	autocmd WinEnter,BufRead * set cursorline
+  autocmd! cch
+  autocmd WinLeave * set nocursorline
+  autocmd WinEnter,BufRead * set cursorline
 augroup END
 
-" 全角スペースをハイライトさせる
+" }}}
+
+" highlight two byte char space {{{
+
 function! TwoByteCharSpace()
-	highlight TwoByteCharSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
+  highlight TwoByteCharSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
 endfunction
 
 if has('syntax')
-	augroup TwoByteCharSpace
-		autocmd!
-		autocmd ColorScheme       * call TwoByteCharSpace()
-		autocmd VimEnter,WinEnter * match TwoByteCharSpace /　/
-	augroup END
-	call TwoByteCharSpace()
+  augroup TwoByteCharSpace
+    autocmd!
+    autocmd ColorScheme       * call TwoByteCharSpace()
+    autocmd VimEnter,WinEnter * match TwoByteCharSpace /　/
+  augroup END
+  call TwoByteCharSpace()
 endif
 
-" 末尾スペースのハイライト
+" }}}
+
+" highlight trailing spaces {{{
+
 augroup HighlightTrailingSpaces
-	autocmd!
-	autocmd VimEnter,WinEnter,ColorScheme * highlight TrailingSpaces term=underline guibg=Blue ctermbg=Blue
-	autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
+  autocmd!
+  autocmd VimEnter,WinEnter,ColorScheme * highlight TrailingSpaces term=underline guibg=Blue ctermbg=Blue
+  autocmd VimEnter,WinEnter * match TrailingSpaces /\s\+$/
 augroup END
 
-" 保存時に行末の空白を除去する
-function! s:remove_dust()
-	let cursor = getpos(".")
-	" 保存時に行末の空白を除去する
-	%s/\s\+$//ge
-	call setpos(".", cursor)
-	unlet cursor
+" }}}
+
+" remove trailing spaces on save {{{
+
+function! s:remove_trailing_spaces()
+  let cursor = getpos(".")
+  %s/\s\+$//ge
+  call setpos(".", cursor)
+  unlet cursor
 endfunction
-autocmd BufWritePre * call <SID>remove_dust()
+autocmd BufWritePre * call <SID>remove_trailing_spaces()
 
-" 独自設定ファイルを読み込ませる
-augroup vimrc-local
-	autocmd!
-	autocmd BufNewFile,BufReadPost * call s:vimrc_local(expand('<afile>:p:h'))
+" }}}
+
+" load project vimrc {{{
+
+augroup LoadProjectVimrc
+  autocmd!
+  autocmd BufNewFile,BufReadPost * call s:load_project_vimrc(expand('<afile>:p:h'))
 augroup END
 
-function! s:vimrc_local(loc)
-	let files = findfile('.vimrc.local', escape(a:loc, ' ') . ';', -1)
-	for i in reverse(filter(files, 'filereadable(v:val)'))
-		source `=i`
-	endfor
+function! s:load_project_vimrc(loc)
+  let files = findfile('.project.rc.vim', escape(a:loc, ' ') . ';', -1)
+  for i in reverse(filter(files, 'filereadable(v:val)'))
+    source `=i`
+  endfor
 endfunction
 
 " }}}

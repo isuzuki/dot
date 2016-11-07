@@ -39,7 +39,7 @@ repo = 'Shougo/neoyank.vim'
 [[plugins]] # search
 repo = 'rking/ag.vim'
 
-[[plugins]] # diff current and git
+[[plugins]] # diff git
 repo = 'airblade/vim-gitgutter'
 
 [[plugins]] # enable git command on vim
@@ -61,4 +61,4 @@ repo = 'kannokanno/previm'
 repo = 'tyru/open-browser.vim'
 
 [[plugins]] # check syntax
-repo ='scrooloose/syntastic'
+repo = 'scrooloose/syntastic'

@@ -13,11 +13,11 @@ set noerrorbells
 
 " }}}
 
-" source vimrc files {{{
+" load vimrc files {{{
 
-source ~/vim/dein.rc.vim
-source ~/vim/options.rc.vim
-source ~/vim/filetypes.rc.vim
-source ~/vim/plugins.rc.vim
+source ~/.vim/dein.rc.vim
+source ~/.vim/options.rc.vim
+source ~/.vim/filetypes.rc.vim
+source ~/.vim/plugins.rc.vim
 
 " }}}
