@@ -18,13 +18,17 @@ on_i = 1
 repo = 'tpope/vim-surround'
 on_i = 1
 
-[[plugins]] # JavaScript libraries highlight
-repo = 'othree/javascript-libraries-syntax.vim'
-on_ft = 'javascript'
+[[plugins]] # check syntax
+repo = 'scrooloose/syntastic'
+on_i = 1
 
 [[plugins]]
 repo = 'mattn/emmet-vim'
-on_ft = 'html'
+on_i = 1
+
+[[plugins]] # JavaScript libraries highlight
+repo = 'othree/javascript-libraries-syntax.vim'
+on_ft = 'javascript'
 
 [[plugins]]
 repo = 'cespare/vim-toml'

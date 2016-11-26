@@ -60,5 +60,5 @@ repo = 'kannokanno/previm'
 [[plugins]]
 repo = 'tyru/open-browser.vim'
 
-[[plugins]] # check syntax
-repo = 'scrooloose/syntastic'
+[[plugins]]
+repo = 'othree/html5.vim'
