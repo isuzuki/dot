@@ -6,4 +6,4 @@ if test ! "$(which npm)"; then
 	exit 1
 fi
 
-npm install -g bower browser-sync gulp-cli karma-cli typescript yo
+npm install -g bower browser-sync gulp-cli karma-cli psi typescript yo
