@@ -35,6 +35,7 @@ formulas=(
 
 	# Tools
 	ag
+	colordiff
 	nkf
 	massren
 	pstree
