@@ -1,7 +1,10 @@
 export LANG=ja_JP.UTF-8
 export EDITOR=vim
 
+# play
 export PATH=/usr/local/opt/play-2.1.0:$PATH
+# php
+export PATH=$(brew --prefix homebrew/php/php70)/bin:$HOME/.composer/vendor/bin:$PATH
 
 HISTFILE=$HOME/.zsh-history
 HISTSIZE=100000
