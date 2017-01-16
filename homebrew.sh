@@ -36,6 +36,7 @@ formulas=(
 	# Tools
 	ag
 	colordiff
+	ctags
 	nkf
 	massren
 	pstree
