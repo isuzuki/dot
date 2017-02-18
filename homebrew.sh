@@ -39,6 +39,7 @@ formulas=(
 	ctags
 	nkf
 	massren
+	phantomjs
 	pstree
 	tree
 	wget
