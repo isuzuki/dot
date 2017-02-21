@@ -37,6 +37,7 @@ formulas=(
 	ag
 	colordiff
 	ctags
+	jq
 	nkf
 	massren
 	phantomjs
