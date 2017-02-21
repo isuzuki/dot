@@ -36,6 +36,9 @@ repo = 'Shougo/neosnippet-snippets'
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
 
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+
 [[plugins]] # search
 repo = 'rking/ag.vim'
 
