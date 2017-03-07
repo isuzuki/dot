@@ -9,6 +9,9 @@ build = 'make'
 [[plugins]] # color scheme
 repo = 'w0ng/vim-hybrid'
 
+[[plugins]]
+repo = 'dracula/vim'
+
 [[plugins]] # custom status line
 repo = 'itchyny/lightline.vim'
 

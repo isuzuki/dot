@@ -8,7 +8,7 @@ let g:hybrid_custom_term_colors = 1
 syntax enable
 set t_Co=256
 set background=dark
-colorscheme hybrid
+colorscheme dracula
 set laststatus=2
 
 filetype plugin indent on
