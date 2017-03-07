@@ -111,7 +111,7 @@ zle -N peco-select-history
 bindkey '^r' peco-select-history
 
 # install z
-# mkdir -p; git clone git@github.com:rupa/z.git ~/.zsh.d
+# mkdir -p ~/.zsh.d; git clone git@github.com:rupa/z.git ~/.zsh.d
 if [ -f "$HOME/.zsh.d/z.sh" ]; then
 	source "$HOME/.zsh.d/z.sh"
 fi
