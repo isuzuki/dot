@@ -2,20 +2,20 @@
 
 # homebrewがインストール済みではない場合、インストールする
 if test ! "$(which brew)"; then
-	echo "Installing homebrew..."
-	ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    echo "Installing homebrew..."
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
 # Update homebrew
 printf "Update? [Y/n]: " && read -r answer
 if test "$answer" = "Y"; then
-	brew update
+    brew update
 fi
 
 # Upgrade homebrew
 printf "Upgrade? [Y/n]: " && read -r answer
 if test "$answer" = "Y"; then
-	brew upgrade
+    brew upgrade
 fi
 
 # Add Repository
@@ -24,45 +24,47 @@ brew tap laurent22/massren
 # Formulas
 formulas=(
 
-	# Shell
-	zsh
-	zsh-completions
-	peco
+    # Shell
+    zsh
+    zsh-completions
+    peco
 
-	# Multiplexe
-	tmux
-	reattach-to-user-namespace
+    # Multiplexe
+    tmux
+    reattach-to-user-namespace
 
-	# Tools
-	ag
-	colordiff
-	ctags
-	jq
-	nkf
-	massren
-	phantomjs
-	pstree
-	tree
-	wget
+    # Tools
+    ag
+    colordiff
+    ctags
+    ghq
+    hub
+    jq
+    nkf
+    massren
+    phantomjs
+    pstree
+    tree
+    wget
 
-	# Git
-	git
+    # Git
+    git
 
-	# Languages
-	go
-	lua
-	nvm
+    # Languages
+    go
+    lua
+    nvm
 
-	# Languages syntax
-	shellcheck
+    # Languages syntax
+    shellcheck
 
-	# Operations
-	ansible
-	docker
-	docker-machine
+    # Operations
+    ansible
+    docker
+    docker-machine
 
-	# PaaS
-	heroku-toolbelt
+    # PaaS
+    heroku-toolbelt
 
 )
 
@@ -75,12 +77,12 @@ brew install caskroom/cask/brew-cask
 # Applications
 applications=(
 
-	# Chat
-	slack
+    # Chat
+    slack
 
-	# VM
-	virtualbox
-	vagrant
+    # VM
+    virtualbox
+    vagrant
 )
 
 # Install apps to /Applications
