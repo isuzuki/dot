@@ -1,7 +1,7 @@
 #===== my settings =====#
 .vimrc.local
 .project.rc.vim
-
+.idea/*
 
 
 #===== settings by gibo =====#
@@ -12,7 +12,8 @@
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
