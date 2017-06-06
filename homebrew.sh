@@ -54,6 +54,7 @@ formulas=(
     go
     lua
     nvm
+    Caskroom/cask/miniconda
 
     # Languages syntax
     shellcheck

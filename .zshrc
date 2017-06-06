@@ -8,6 +8,8 @@ export PATH=$(brew --prefix homebrew/php/php70)/bin:$HOME/.composer/vendor/bin:$
 # go
 export GOPATH=$HOME/dev
 export PATH=$GOPATH/bin:$PATH
+# miniconda
+export PATH=$HOME/miniconda3/bin:$PATH
 
 HISTFILE=$HOME/.zsh-history
 HISTSIZE=100000
