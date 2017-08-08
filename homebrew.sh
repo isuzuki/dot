@@ -45,6 +45,7 @@ formulas=(
     phantomjs
     pstree
     tree
+    watch
     wget
 
     # Git
@@ -54,6 +55,8 @@ formulas=(
     go
     lua
     nvm
+    sbt
+    scala
     Caskroom/cask/miniconda
 
     # Languages syntax
@@ -63,6 +66,8 @@ formulas=(
     ansible
     docker
     docker-machine
+    kubectl
+    Caskroom/cask/minikube
 
     # PaaS
     heroku-toolbelt
